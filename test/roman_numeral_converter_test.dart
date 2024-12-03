@@ -12,12 +12,13 @@ void main() {
     (numeral: "X", integerValue: 10),
     (numeral: "IV", integerValue: 4),
     (numeral: "XLI", integerValue: 41),
-    (numeral: "DXC", integerValue: 590)
+    (numeral: "DXC", integerValue: 590),
+    (numeral: "MMDCCCLXXXIX", integerValue: 2889),
   ];
 
   for (final (:numeral, :integerValue) in numeralTestCases) {
     test("Converter converts $numeral to $integerValue", () {
-      expect(numeralConverter.convertFromInt(numeral), integerValue);
+      expect(numeralConverter.convertToInt(numeral), integerValue);
     });
   }
 }
