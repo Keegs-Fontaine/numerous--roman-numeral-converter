@@ -9,28 +9,38 @@ class RomanNumeralConverter {
     "M": 1000
   };
 
+  int _getNumeralValue(String char) {
+    final numeralValue = numerals[char];
+
+    if (numeralValue == null) {
+      throw Exception("Invalid Numeral Input at Character: $char");
+    }
+
+    return numeralValue;
+  }
+
+  int _getNumeralSum(int currentNumeralValue, int nextNumeralValue) {
+    if (currentNumeralValue < nextNumeralValue) return -currentNumeralValue;
+
+    return currentNumeralValue;
+  }
+
   int convertToInt(final String numeral) {
     int runningSum = 0;
+    final numeralLength = numeral.length;
 
-    for (int i = 0; i < numeral.length - 1; i++) {
+    for (int i = 0; i < numeralLength - 1; i++) {
       final currentChar = numeral[i];
       final nextChar = numeral[i + 1];
 
-      final currentNumeralValue = numerals[currentChar];
-      final nextNumeralValue = numerals[nextChar];
+      final currentNumeralValue = _getNumeralValue(currentChar);
+      final nextNumeralValue = _getNumeralValue(nextChar);
 
-      if (currentNumeralValue == null || nextNumeralValue == null) {
-        throw Exception("Invalid Numeral Input: $numeral");
-      }
-
-      if (currentNumeralValue < nextNumeralValue) {
-        runningSum -= currentNumeralValue;
-      } else {
-        runningSum += currentNumeralValue;
-      }
+      runningSum += _getNumeralSum(currentNumeralValue, nextNumeralValue);
     }
 
-    runningSum += numerals[numeral.split("").last] ?? 0;
+    final lastNumeralValue = _getNumeralValue(numeral[numeralLength - 1]);
+    runningSum += lastNumeralValue;
 
     return runningSum;
   }
