@@ -1,10 +1,23 @@
 import 'package:numerus/roman_numeral_converter.dart';
 import 'package:test/test.dart';
 
+typedef NumeralTestCases = ({String numeral, int integerValue});
+
 void main() {
   final numeralConverter = RomanNumeralConverter();
 
-  test("Converter converts I to 1", () {
-    expect(numeralConverter.convertFromInt("I"), 1);
-  });
+  final List<NumeralTestCases> numeralTestCases = [
+    (numeral: "I", integerValue: 1),
+    (numeral: "V", integerValue: 5),
+    (numeral: "X", integerValue: 10),
+    (numeral: "IV", integerValue: 4),
+    (numeral: "XLI", integerValue: 41),
+    (numeral: "DXC", integerValue: 590)
+  ];
+
+  for (final (:numeral, :integerValue) in numeralTestCases) {
+    test("Converter converts $numeral to $integerValue", () {
+      expect(numeralConverter.convertFromInt(numeral), integerValue);
+    });
+  }
 }
